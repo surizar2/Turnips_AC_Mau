@@ -1,2 +1,4 @@
-# Turnips_AC_Mau
-datos de los turnips de animal crossing para análisis etadísticos
+# Análisis del precio de los nabos
+**Animal Crossing: New Horizon**
+
+Compilación de información y análisis del precio de los nabos en *Animal Crossing: New Horizon*.
