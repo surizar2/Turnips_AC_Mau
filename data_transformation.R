@@ -33,25 +33,28 @@ NombresFinal <-  c("Fecha", NombresFinal)
 
 colnames(data) <-  NombresFinal
 
-primerFecha <- as.POSIXct(
-  paste(data$fecha[1], "09:00"),
-  format = "%d/%m/%Y %H:%M"
-)
-
-fechaRango <- seq(
-  primerFecha, 
-  by = as.difftime("12:00:00"), 
-  length.out = 2 * dim(data)[1]
-)
+Fechas <- as.POSIXct(
+  paste(data$Fecha[1], "09:00"),
+  format = "%d/%m/%Y %H:%M")
+for(i in 1:length(data$Fecha))
+{
+  FechaTemp <- as.POSIXct(
+    paste(data$Fecha[i], "09:00"),
+    format = "%d/%m/%Y %H:%M"
+  )
+  FechaTemp2 <- FechaTemp + 12*3600
+  Fechas <- c(Fechas,FechaTemp,FechaTemp2)
+}
+Fechas <- Fechas[-1]
 
 
 data2 <- tibble(
-  Fecha = fechaRango
+  Fecha = Fechas
 )
 
 for (i in 1:length(participantes)) {
-  data2[1:(length(fechaRango)/2), participantes[i]] <- data[, 2*i]
-  data2[(length(fechaRango)/2 + 1):length(fechaRango), participantes[i]] <- data[, 2*i + 1]
+  data2[1:(length(Fechas)/2), participantes[i]] <- data[, 2*i]
+  data2[(length(Fechas)/2 + 1):length(Fechas), participantes[i]] <- data[, 2*i + 1]
 }
 
 
@@ -60,7 +63,6 @@ for (i in 1:length(participantes)) {
 }
 
 write.csv(data2, "turnip.csv")
-
 
 
 # -------------------------------------------------------------------------
